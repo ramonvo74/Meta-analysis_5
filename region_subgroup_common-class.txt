@@ -1,0 +1,53 @@
+                          SMD            95%-CI %W(random)      region
+Call et al.            0.7091 [ 0.1979; 1.2203]        5.2 Netherlands
+Cavanagh et al.        0.3549 [-0.0300; 0.7397]        6.1 Netherlands
+DanitzOrsillo          1.7912 [ 1.1139; 2.4685]        4.2 Netherlands
+de Vibe et al.         0.1825 [-0.0484; 0.4133]        7.1         USA
+Frazier et al.         0.4219 [ 0.1380; 0.7057]        6.8         USA
+Frogeli et al.         0.6300 [ 0.2458; 1.0142]        6.1         USA
+Gallego et al.         0.7249 [ 0.2846; 1.1652]        5.7         USA
+Hazlett-Stevens & Oren 0.5287 [ 0.1162; 0.9412]        5.9   Argentina
+Hintz et al.           0.2840 [-0.0453; 0.6133]        6.5   Argentina
+Kang et al.            1.2751 [ 0.6142; 1.9360]        4.3   Argentina
+Kuhlmann et al.        0.1036 [-0.2781; 0.4853]        6.1   Australia
+Lever Taylor et al.    0.3884 [-0.0639; 0.8407]        5.6   Australia
+Phang et al.           0.5407 [ 0.0619; 1.0196]        5.4   Australia
+Rasanen et al.         0.4262 [-0.0794; 0.9317]        5.3       China
+Ratanasiripong         0.5154 [-0.1731; 1.2039]        4.1       China
+Shapiro et al.         1.4797 [ 0.8618; 2.0977]        4.5       China
+SongLindquist          0.6126 [ 0.1683; 1.0569]        5.7       China
+Warnecke et al.        0.6000 [ 0.1120; 1.0880]        5.4       China
+
+Number of studies combined: k = 18
+
+                        SMD            95%-CI    t  p-value
+Random effects model 0.5935 [ 0.3891; 0.7979] 6.13 < 0.0001
+Prediction interval         [-0.2084; 1.3954]              
+
+Quantifying heterogeneity:
+tau^2 = 0.1337; H = 1.64 [1.27; 2.11]; I^2 = 62.6% [37.9%; 77.5%]
+
+Quantifying residual heterogeneity:
+tau^2 = 0.1416; H = 2.00; I^2 = 75.1%
+
+Test of heterogeneity:
+     Q d.f. p-value
+ 45.50   17  0.0002
+
+Results for subgroups (random effects model):
+                       k    SMD            95%-CI     Q  tau^2   I^2
+region = Netherlands   3 0.8631 [-0.9173; 2.6435] 13.06 0.1416 84.7%
+region = USA           4 0.4730 [ 0.0877; 0.8583]  6.87 0.1416 56.3%
+region = Argentina     3 0.6263 [-0.5807; 1.8333]  6.95 0.1416 71.2%
+region = Australia     3 0.3355 [-0.2205; 0.8914]  2.13 0.1416  6.1%
+region = China         5 0.7122 [ 0.2008; 1.2236]  7.81 0.1416 48.8%
+
+Test for subgroup differences (random effects model):
+                   Q d.f. p-value
+Between groups  3.96    4  0.4121
+Within groups  36.83   13  0.0004
+
+Details on meta-analytical method:
+- Inverse variance method
+- Sidik-Jonkman estimator for tau^2 (assuming common tau^2 in subgroups)
+- Hartung-Knapp adjustment for random effects model

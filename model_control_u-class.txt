@@ -1,0 +1,49 @@
+                          SMD            95%-CI %W(fixed)          Control
+Call et al.            0.7091 [ 0.1979; 1.2203]       3.6              WLC
+Cavanagh et al.        0.3549 [-0.0300; 0.7397]       6.3              WLC
+DanitzOrsillo          1.7912 [ 1.1139; 2.4685]       2.0              WLC
+de Vibe et al.         0.1825 [-0.0484; 0.4133]      17.5  no intervention
+Frazier et al.         0.4219 [ 0.1380; 0.7057]      11.6 information only
+Frogeli et al.         0.6300 [ 0.2458; 1.0142]       6.3  no intervention
+Gallego et al.         0.7249 [ 0.2846; 1.1652]       4.8  no intervention
+Hazlett-Stevens & Oren 0.5287 [ 0.1162; 0.9412]       5.5  no intervention
+Hintz et al.           0.2840 [-0.0453; 0.6133]       8.6 information only
+Kang et al.            1.2751 [ 0.6142; 1.9360]       2.1  no intervention
+Kuhlmann et al.        0.1036 [-0.2781; 0.4853]       6.4  no intervention
+Lever Taylor et al.    0.3884 [-0.0639; 0.8407]       4.6              WLC
+Phang et al.           0.5407 [ 0.0619; 1.0196]       4.1  no intervention
+Rasanen et al.         0.4262 [-0.0794; 0.9317]       3.6              WLC
+Ratanasiripong         0.5154 [-0.1731; 1.2039]       2.0  no intervention
+Shapiro et al.         1.4797 [ 0.8618; 2.0977]       2.4              WLC
+SongLindquist          0.6126 [ 0.1683; 1.0569]       4.7              WLC
+Warnecke et al.        0.6000 [ 0.1120; 1.0880]       3.9 information only
+
+Number of studies combined: k = 18
+
+                       SMD            95%-CI    z  p-value
+Fixed effect model  0.4805 [ 0.3840; 0.5771] 9.75 < 0.0001
+Prediction interval        [-0.2084; 1.3954]              
+
+Quantifying heterogeneity:
+tau^2 = 0.1337; H = 1.64 [1.27; 2.11]; I^2 = 62.6% [37.9%; 77.5%]
+
+Quantifying residual heterogeneity:
+H = 1.63 [1.25; 2.14]; I^2 = 62.5% [35.7%; 78.2%]
+
+Test of heterogeneity:
+     Q d.f. p-value
+ 45.50   17  0.0002
+
+Results for subgroups (fixed effect model):
+                             k    SMD           95%-CI     Q  tau^2   I^2
+Control = WLC                7 0.6688 [0.4839; 0.8537] 22.17 0.2501 72.9%
+Control = no intervention    8 0.4141 [0.2757; 0.5525] 16.70 0.0789 58.1%
+Control = information only   3 0.4016 [0.2048; 0.5983]  1.14 0.0068  0.0%
+
+Test for subgroup differences (fixed effect model):
+                   Q d.f. p-value
+Between groups  5.49    2  0.0644
+Within groups  40.02   15  0.0005
+
+Details on meta-analytical method:
+- Inverse variance method

@@ -1,0 +1,122 @@
+---
+title: "Solution Session 5"
+author: "Dr. Thomas Pollet, Northumbria University (thomas.pollet@northumbria.ac.uk)"
+date: '`r format(Sys.Date())` | [disclaimer](https://tvpollet.github.io/disclaimer)'
+output:
+  html_document:
+    toc: true
+---
+
+## Questions.
+
+
+Using the `dat.raudenbush1985` from week 3. Rerun the random-effects meta-analysis with REML estimation. 
+
+* Perform meta-regressions with tester blindness (`tester`) as a moderator, make one model with a commone estimate
+*
+
+
+## Load and manipulate the data
+
+There are 19 studies.
+
+```{r}
+library(meta)
+library(metafor)
+Data<-dat.raudenbush1985
+head(Data)
+```
+
+I have made the names as in our slides. Note that this is unnecessary duplication (as TE = _yi_ ) but then it maps on nicely to our code.
+
+```{r}
+library(dplyr)
+Data <- Data %>% mutate(TE=yi, seTE=sqrt(vi))
+```
+
+As in the solution of exercise 3, let's combine, author and year. 
+
+Let's bracket the year as per convention. Here I rely on base R and [this snippet](https://stackoverflow.com/questions/29884082/apply-parentheses-around-elements-of-r-dataframe).
+
+```{r}
+Data$year_b <- paste0("(", format(unlist(Data[,3])),")")
+```
+
+Then we combine as done in [here](https://stackoverflow.com/questions/18115550/combine-two-or-more-columns-in-a-dataframe-into-a-new-column-with-a-new-name). Here I have opted for a '[tidyverse](https://www.tidyverse.org/)' solution.
+
+```{r}
+library(tidyverse)
+Data <-Data %>% unite(author_year, c(author, year_b), sep = " ", remove = FALSE)
+```
+
+Let's redo our model but now with `author_year`.
+
+```{r}
+require(meta)
+model_reml2<-metagen(TE,
+        seTE,
+        data=Data,
+        studlab=paste(author_year),
+        comb.fixed = FALSE,
+        comb.random = TRUE,
+        method.tau = "REML",
+        hakn = FALSE,
+        prediction=TRUE,
+        sm="SMD")
+model_reml2
+```
+
+## Meta-regression.
+
+Below we perform the metaregression models.
+
+Interestingly, it seems that the effect is stronger in the blinded group than in the aware group.
+
+```{r,warning=F, message=F}
+tester_subgroup_common<-update.meta(model_reml2, 
+                             byvar=tester, 
+                             comb.random = TRUE, 
+                             comb.fixed = FALSE,
+                             tau.common=TRUE)
+tester_subgroup_common
+```
+
+This model allows an estimate of variance $\tau^2$ for each group.
+
+```{r,warning=F, message=F}
+tester_subgroup_sep<-update.meta(model_reml2, 
+                             byvar=tester, 
+                             comb.random = TRUE, 
+                             comb.fixed = FALSE,
+                             tau.common=FALSE)
+tester_subgroup_sep
+```
+
+## Acknowledgments and further reading... .
+
+The example is from [here](http://www.metafor-project.org/doku.php/analyses:raudenbush2009#fixed-effects_model). 
+
+
+Note that throughout I have varied the rounding when I reported, you should make your own decisions on how precise you believe your results to be. 
+
+Please see the slides for further reading but a good place to start is Chapter 8 on models and approaches to inference in Koricheva, J., Gurevitch, J., & Mengersen, K. (2013). _Handbook of Meta-Analysis in Ecology and Evolution_. Princeton, NJ: Princeton University Press.
+
+
+**Cited literature**
+
+Raudenbush, S. W. (1984). Magnitude of teacher expectancy effects on pupil IQ as a function of the credibility of expectancy induction: A synthesis of findings from 18 experiments. _Journal of Educational Psychology, 76(1)_, 85–97.
+
+Raudenbush, S. W. (2009). Analyzing effect sizes: Random effects models. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.), _The handbook of research synthesis and meta-analysis_ (2nd ed., pp. 295–315). New York: Russell Sage Foundation.
+
+## The end.
+
+```{r, out.width = "400px", echo=FALSE}
+knitr::include_graphics("https://media.giphy.com/media/20NDbrSQYVKAUKiSoz/giphy.gif") # giphy.com fair use.
+```
+
+## Session info.
+
+```{r}
+sessionInfo()
+```
+

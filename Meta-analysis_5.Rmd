@@ -125,7 +125,7 @@ Many causes could exist: We could try and explain this!
 
 - We can conduct a separate meta-analysis on each subset (e.g., men vs. women, student sample versus non-student sample).
 
-- If the moderator matters, there will be observable differences. Differences between mean effect size across the subsets (do confidence intervals overlap)? . Shinkage of variance in each subset.
+- If the moderator matters, there will be observable differences. Differences between mean effect size across the subsets (do confidence intervals overlap)? . Shrinkage of variance in each subset.
 
 - If we evaluate multiple moderators, we need to be really wary of correlated predictors.
 
@@ -142,12 +142,12 @@ across the subgroups
 
 * If you assume that **all studies in subgroup** stem from the same population, and all have **one shared true effect**, you may use the **fixed-effect-model**. However, unlikely this assumption is ever **true in psychological** and **medical research**, even when we divide our studies into subgroups.
 
-* Therefore, we typically use a **random-effect-model** which assumes that the studies within a subgroup are drawn from a **universe** of populations follwing its own distribution,... .
+* Therefore, we typically use a **random-effect-model** which assumes that the studies within a subgroup are drawn from a **universe** of populations following its own distribution,... .
 
 ---
 ## A fixed effects example: Subgroup 1.
 
-Control consists of control, Waiting list (WLC), information only. Here we compore waiting list versus no intervention.
+Control consists of control, Waiting list (WLC), information only. Here we compare waiting list versus no intervention.
 
 ```{r}
 model_subgroup1<-metagen(TE,
@@ -243,7 +243,7 @@ madata$region<-region
 ```
 
 ---
-## Subgroup Analyses using the Random-Effects-Model: common.
+## Subgroup Analyses using the Random-Effects-Model: 'common'.
 
 This model assumes a common $\tau^2$ , we use our previous model and update it!
 
@@ -518,7 +518,7 @@ We can test numerous meta-regression models, include many more predictors or rem
 ---
 ## Common pitfalls: Multicollinearity
 
-Multicollinearity means that one or more predictorq in our regression model can be (linearly) **predicted from another predictor** in our model with relatively high accuracy (Harrell, 2015:78-ff). This basically means that we have two or more predictors in our model which are **highly correlated**. Most of the dangers of multicollinearity are associated with the problem of **overfitting** which we described above. High collinearity can cause our predictor coefficient estimates $b$ to behave erratically, and change considerably with minor changes in our data. It also limits the size of the explained variance by the model, in our case the $R^2$ analog. 
+Multicollinearity means that one or more predictors in our regression model can be (linearly) **predicted from another predictor** in our model with relatively high accuracy (Harrell, 2015:78-ff). This basically means that we have two or more predictors in our model which are **highly correlated**. Most of the dangers of multicollinearity are associated with the problem of **overfitting** which we described above. High collinearity can cause our predictor coefficient estimates $b$ to behave erratically, and change considerably with minor changes in our data. It also limits the size of the explained variance by the model, in our case the $R^2$ analog. 
 
 --
 
@@ -683,11 +683,11 @@ Permutation is a process where we **rearrange**, or **shuffle**, the order of ou
 
 --
 
-Permutation can also be used to perform **permutation tests**, which is a specific form of **resampling methods**. These can be used to validate the **robustness** of a statistical model by providing it with (slightly) different data sampled from the same data source or generative process (Good, 2013). It allows us ** to assess if the coeffients capture a true pattern underlying our data**, or if we falsely assumed patterns, when they are statistical noise.
+Permutation can also be used to perform **permutation tests**, which is a specific form of **resampling methods**. These can be used to validate the **robustness** of a statistical model by providing it with (slightly) different data sampled from the same data source or generative process (Good, 2013). It allows us ** to assess if the coefficients capture a true pattern underlying our data**, or if we falsely assumed patterns, when they are statistical noise.
 
 --
 
-Technical details (Good, 2013; Viechtbauer 2015): In brief, we **re-calculate** the **p-values** of our overall meta-regression model and its coefficients based on the test statitics obtained across all possible, or many randomly selected, permutations. **How often is the test statistic we obtain from in our permuted data equal or greater than our original test statistic?**. F
+Technical details (Good, 2013; Viechtbauer 2015): In brief, we **re-calculate** the **p-values** of our overall meta-regression model and its coefficients based on the test statistics obtained across all possible, or many randomly selected, permutations. **How often is the test statistic we obtain from in our permuted data equal or greater than our original test statistic?**. F
 
 ---
 ## Permutation test via `metafor`
@@ -715,7 +715,7 @@ permutest(model_qual_rep, iter=10000, progbar=F) # hide progress.
 
 --
 
-If the **number of studies** $k$ included in our model is **small**, conventionally used tresholds for statistical significance (i.e., p < 0.05) **cannot be reached**. A permutation test using `permutest` can only reach statistical significance if $k \geq 5$. Details on the `permutest` function can be found [here](https://www.rdocumentation.org/packages/metafor/versions/2.1-0/topics/permutest). Note that you can for example also gain Confidence Intervals.  
+If the **number of studies** $k$ included in our model is **small**, conventionally used thresholds for statistical significance (i.e., p < 0.05) **cannot be reached**. A permutation test using `permutest` can only reach statistical significance if $k \geq 5$. Details on the `permutest` function can be found [here](https://www.rdocumentation.org/packages/metafor/versions/2.1-0/topics/permutest). Note that you can for example also gain Confidence Intervals.  
 
 
 ---
@@ -752,6 +752,13 @@ Readers will tend to focus on the headline and ignore the effects of moderators,
 
 ---
 ## Exercise.
+
+Please see the exercise posted [here](https://tvpollet.github.io/Meta-analysis_5/Exercise_5_questions.html)
+
+
+```{r, out.width = "600px", echo=FALSE, fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/Pk20jMIe44bHa/giphy.gif") # from giphy.com
+```
 
 ---
 ## Any Questions?
