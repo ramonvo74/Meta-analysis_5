@@ -102,7 +102,11 @@ Many causes could exist: We could try and explain this!
 
 - Compared to original research studies, meta-analysis can have much greater statistical power to uncover moderators.
 
+--
+
 - Each primary study (of e.g, N=40) might not have sufficient subgroup members to examine an effect. But pooled data (20 studies, totaling N=800) would allow us to detect it.
+
+--
 
 - However, even in meta-analysis there are considerable constraints on power to detect effects
 
@@ -137,10 +141,17 @@ Many causes could exist: We could try and explain this!
 * random effects models with separate estimates for between-study variance $\tau^2$
 across the subgroups
 
+```{r, out.width = "500px", echo=FALSE, fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/FHzemFzwkyRfq/giphy.gif") # From giphy
+```
+
+
 ---
 ## When to use a fixed effect?
 
 * If you assume that **all studies in subgroup** stem from the same population, and all have **one shared true effect**, you may use the **fixed-effect-model**. However, unlikely this assumption is ever **true in psychological** and **medical research**, even when we divide our studies into subgroups.
+
+--
 
 * Therefore, we typically use a **random-effect-model** which assumes that the studies within a subgroup are drawn from a **universe** of populations following its own distribution,... .
 
@@ -209,7 +220,7 @@ We would need vectors of the estimate of the treatment effects and corresponding
 ---
 ## Fixed effect meta-analysis.
 
-This uses the generic invariance method. This suggests there is no significant difference in ( $Q=5.49$,$p=0.064$ ).
+This uses the generic invariance method. This suggests there is no significant difference in ( $Q=5.49$, $p=0.064$ ).
 
 ```{r}
 model_control<-metagen(TE.control,
@@ -237,7 +248,7 @@ sink()
 ---
 ## A random effects example: Region.
 
-```{r,echo=FALSE}
+```{r}
 region<-c("Netherlands","Netherlands","Netherlands","USA","USA","USA","USA","Argentina","Argentina","Argentina","Australia","Australia","Australia","China","China","China","China","China")
 madata$region<-region
 ```
@@ -334,7 +345,7 @@ Note I use b's here rather than $\beta$'s in order to avoid confusion based on s
 knitr::include_graphics("dummy.png") # From harrer (2019)
 ```
 
-??? 
+???
 Note that on the graph it says $\beta$ rather than b's.
 
 ---
@@ -345,6 +356,9 @@ $$ t=\frac{b}{SE_{b}}$$
 
 This gives us a $p$-value telling us if a variable significantly predicts effect size differences in our regression model.
 
+```{r, out.width = "400px", echo=FALSE, fig.align='center', fig.cap= 'https://xkcd.com/1478/'}
+knitr::include_graphics("p_values_2x.png") # From xkcd.com
+```
 
 ---
 ## Assessing regression models: variance.
@@ -354,7 +368,7 @@ Our aim is to find a model **which explains as much as possible of the current v
 --
 
 In conventional regression, $R^2$ is commonly used to quantify the **goodness of fit** of our model in percent (0-100%). As this measure is commonly used, and many researchers know how to to interpret it, we can also calculate a $R^2$ analog for meta-regression using this formula:
-$$R_2=\frac{\hat\tau^2_{Random}-\hat\tau^2_{Regress}}{\hat\tau^2_{Random}}$$
+$$R^2=\frac{\hat\tau^2_{Random}-\hat\tau^2_{Regress}}{\hat\tau^2_{Random}}$$
 Where $\hat\tau^2_{Random}$ is the estimated total heterogeneity based on the random-effects-model and $\hat\tau^2_{Regress}$ the total heterogeneity of our mixed-effects regression model.
 
 
@@ -473,7 +487,7 @@ knitr::include_graphics("https://media.giphy.com/media/3o7btRT1IUGb8YjPlS/giphy.
 * **Overfitting: seeing a signal when there is none**
 Statistical model which fits the data **too closely** (Harrell, 2015: 72-ff). 
 
-```{r, out.width = "400px", echo=FALSE, fig.align='center', fig.cap="Illustration from Harrer"}
+```{r, out.width = "550px", echo=FALSE, fig.align='center', fig.cap="Illustration from Harrer"}
 knitr::include_graphics("overfitting.png") # https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/multiple-meta-regression.html
 ```
 
@@ -522,7 +536,11 @@ Multicollinearity means that one or more predictors in our regression model can 
 
 --
 
-**Multicollinearity in meta-regression is common** . Although multiple regression can handle lower degrees of collinearity, we should **check** and, if necessary, **control for very highly correlated predictors**. There is no consolidated yes-no-rule for the presence of multicollinearity. A crude, but often effective way is to check for very high correlations (i.e., $r\geq0.8$) before fitting the model. Multicollinearity can then be reduced by either (1) removing one of the close-to-redundant predictors, or (2) trying to combine the predictors into one single predictor.
+**Multicollinearity in meta-regression is common**. Although multiple regression can handle lower degrees of collinearity, we should **check** and, if necessary, **control for very highly correlated predictors**. 
+
+--
+
+**No simple yes-no-rule** for the presence of multicollinearity. A crude, but often effective way is to check for very high correlations (i.e., $r\geq0.8$) before fitting the model. Multicollinearity solution: (1) removing one of the close-to-redundant predictors, or (2) trying to combine the predictors into one single predictor.
 
 ---
 ## Example.
@@ -687,7 +705,7 @@ Permutation can also be used to perform **permutation tests**, which is a specif
 
 --
 
-Technical details (Good, 2013; Viechtbauer 2015): In brief, we **re-calculate** the **p-values** of our overall meta-regression model and its coefficients based on the test statistics obtained across all possible, or many randomly selected, permutations. **How often is the test statistic we obtain from in our permuted data equal or greater than our original test statistic?**. F
+Technical details (Good, 2013; Viechtbauer 2015): In brief, we **re-calculate** the **p-values** of our overall meta-regression model and its coefficients based on the test statistics obtained across all possible, or many randomly selected, permutations. **How often is the test statistic we obtain from in our permuted data equal or greater than our original test statistic?**.
 
 ---
 ## Permutation test via `metafor`
@@ -696,6 +714,10 @@ Default is 1,000 permutations. You can change this iter=10,000. If you have a lo
 
 ```{r, eval=FALSE}
 permutest(model_qual_rep, iter=10000, progbar=F) # hide progress.
+```
+
+```{r, out.width = "350px", echo=FALSE, fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/x4QKAmG3mjqQo/giphy.gif")
 ```
 
 ???
@@ -756,7 +778,7 @@ Readers will tend to focus on the headline and ignore the effects of moderators,
 Please see the exercise posted [here](https://tvpollet.github.io/Meta-analysis_5/Exercise_5_questions.html)
 
 
-```{r, out.width = "600px", echo=FALSE, fig.align='center'}
+```{r, out.width = "500px", echo=FALSE, fig.align='center'}
 knitr::include_graphics("https://media.giphy.com/media/Pk20jMIe44bHa/giphy.gif") # from giphy.com
 ```
 
