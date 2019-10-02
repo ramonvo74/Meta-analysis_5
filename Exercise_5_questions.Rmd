@@ -1,0 +1,18 @@
+---
+title: "Exercise Session 5"
+author: "Dr. Thomas Pollet, Northumbria University (thomas.pollet@northumbria.ac.uk)"
+date: '`r format(Sys.Date())` | [disclaimer](https://tvpollet.github.io/disclaimer)'
+output:
+  html_document
+---
+
+## Questions.
+
+Using the `dat.raudenbush1985` from week 3. Rerun the random-effects meta-analysis with REML estimation from the earlier exercises. 
+
+* Perform subgroup analyses with tester blindness (`tester`): build one model with a common $\tau^2$ estimate and one without. What do you conclude?
+* Perform a meta-regression with publication year (`year`). Center the year variable first. Make a bubble plot illustrating this meta-regression. What do you conclude?
+* Perform a permutation test with 5000 shuffles for the meta-regression with publication year. What do you conclude?
+* Build a meta-regression model with tester blindness (`tester`) compare it to the meta-regression which contains both tester blindness (`tester`) and centered publication year (`year`). What do you conclude?
+* Build an interaction model between tester blindness and publication year. What do you conclude?
+

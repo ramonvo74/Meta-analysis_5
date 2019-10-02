@@ -317,7 +317,7 @@ $$\hat \theta_k = \theta + b_1x_{1k} + ... + b_nx_{nk} + \epsilon_k + \zeta_k$$
 ---
 ## Meta-regression: two extra terms.
 
-Two **extra terms in the equation**: $\epsilon_k$ and $\zeta_k$.  Thin of these as 2 types of **independent errors** which cause our regression prediction to be **imperfect**. 
+Two **extra terms in the equation**: $\epsilon_k$ and $\zeta_k$.  Think of these as 2 types of **independent errors** which cause our regression prediction to be **imperfect**. 
 
 --
 
@@ -356,7 +356,7 @@ $$ t=\frac{b}{SE_{b}}$$
 
 This gives us a $p$-value telling us if a variable significantly predicts effect size differences in our regression model.
 
-```{r, out.width = "400px", echo=FALSE, fig.align='center', fig.cap= 'https://xkcd.com/1478/'}
+```{r, out.width = "175px", echo=FALSE, fig.align='center', fig.cap= 'https://xkcd.com/1478/'}
 knitr::include_graphics("p_values_2x.png") # From xkcd.com
 ```
 

@@ -9,20 +9,21 @@ output:
 
 ## Questions.
 
+Using the `dat.raudenbush1985` from week 3. Rerun the random-effects meta-analysis with REML estimation from the earlier exercises. 
 
-Using the `dat.raudenbush1985` from week 3. Rerun the random-effects meta-analysis with REML estimation. 
-
-* Perform meta-regressions with tester blindness (`tester`) as a moderator, make one model with a commone estimate
-*
-
+* Perform subgroup analyses with tester blindness (`tester`): build one model with a common $\tau^2$ estimate and one without. What do you conclude?
+* Perform a meta-regression with publication year (`year`). Center the year variable first. Make a bubble plot illustrating this meta-regression. What do you conclude?
+* Perform a permutation test with 5000 shuffles for the meta-regression with publication year. What do you conclude?
+* Build a meta-regression model with tester blindness (`tester`) compare it to the meta-regression which contains both tester blindness (`tester`) and centered publication year (`year`). What do you conclude?
+* Build an interaction model between tester blindness and publication year. What do you conclude?
 
 ## Load and manipulate the data
 
 There are 19 studies.
 
-```{r}
+```{r warning=F, message=F}
 library(meta)
-library(metafor)
+library(metafor) # needed later on.
 Data<-dat.raudenbush1985
 head(Data)
 ```
@@ -44,7 +45,7 @@ Data$year_b <- paste0("(", format(unlist(Data[,3])),")")
 
 Then we combine as done in [here](https://stackoverflow.com/questions/18115550/combine-two-or-more-columns-in-a-dataframe-into-a-new-column-with-a-new-name). Here I have opted for a '[tidyverse](https://www.tidyverse.org/)' solution.
 
-```{r}
+```{r warning=F, message=F}
 library(tidyverse)
 Data <-Data %>% unite(author_year, c(author, year_b), sep = " ", remove = FALSE)
 ```
@@ -66,11 +67,11 @@ model_reml2<-metagen(TE,
 model_reml2
 ```
 
-## Meta-regression.
+##  Subgroup analyses.
 
-Below we perform the metaregression models.
+Below we perform the models by group.
 
-Interestingly, it seems that the effect is stronger in the blinded group than in the aware group.
+Interestingly, it seems that the effect is stronger in the blinded group than in the aware group - perhaps they were better studies? However, there is no significant difference between the groups ( _Q_=.84, _p_ =.367).
 
 ```{r,warning=F, message=F}
 tester_subgroup_common<-update.meta(model_reml2, 
@@ -81,7 +82,7 @@ tester_subgroup_common<-update.meta(model_reml2,
 tester_subgroup_common
 ```
 
-This model allows an estimate of variance $\tau^2$ for each group.
+This model allows an estimate of variance $\tau^2$ for each group. The conclusion is the same there is no evidence for a significant difference between these groups ( _Q_=.81, _p_ =.367).
 
 ```{r,warning=F, message=F}
 tester_subgroup_sep<-update.meta(model_reml2, 
@@ -90,6 +91,107 @@ tester_subgroup_sep<-update.meta(model_reml2,
                              comb.fixed = FALSE,
                              tau.common=FALSE)
 tester_subgroup_sep
+```
+
+## Meta-regression with year
+
+### Center year
+
+```{r}
+Data <- Data %>% mutate(year_cent = year-mean(year))
+```
+
+### Meta-regression
+
+We need to rerun our model as we have added our new moderator variable, note that this overrides our previous model.
+
+```{r}
+require(meta)
+model_reml2<-metagen(TE,
+        seTE,
+        data=Data,
+        studlab=paste(author_year),
+        comb.fixed = FALSE,
+        comb.random = TRUE,
+        method.tau = "REML",
+        hakn = FALSE,
+        prediction=TRUE,
+        sm="SMD")
+model_reml2
+```
+
+There is no suggestion that publication year is a viable predictor of the effect size (_Q_ = .41, _p_= .52).
+
+```{r}
+metareg_pub_year<-metareg(model_reml2,year_cent)
+metareg_pub_year
+```
+
+### Plot
+
+```{r}
+bubble.metareg(metareg_pub_year,
+              xlab = "Publication Year (centered)",
+              ylab = "SMD",
+              col.line = "hotpink",
+              studlab = TRUE)
+```
+
+## Permutation test
+
+We'll use `set.seed()` to ensure we get the same results every single time.
+
+The permutation test corroborates our findings from the meta-regression. There is no substantial evidence for an effect of publication year.
+
+```{r}
+set.seed(1981)
+permutest(metareg_pub_year, iter=5000, progbar=F)
+```
+
+## Compare models
+
+Here we make a switch to `metafor`.
+
+As can be expected this corroborates what we previously found when examining subgroups. Note that I have opted for ML estimation with the Knapp-Hartung estimation. As model comparisons aren't well defined with REML methods, we switched to ML estimation in order to allow
+
+```{r}
+metareg_tester<-rma(yi=TE, 
+              sei=seTE, 
+              data=Data, 
+              method = "ML", 
+              mods = ~ tester, 
+              test="knha")
+metareg_tester
+```
+
+```{r}
+metareg_pub_tester<-rma(yi=TE, 
+              sei=seTE, 
+              data=Data, 
+              method = "ML", 
+              mods = ~ tester + year_cent, 
+              test="knha")
+metareg_pub_tester
+```
+
+```{r}
+anova(metareg_tester,metareg_pub_tester)
+```
+
+Both the AIC/BIC (as well as the Likelihood ratio test (LRT)) do not suggest superiority of one model over another.
+
+## Interaction model
+
+We reverted back to the REML model estimation. This model does not support an interaction effect between publication year and tester blindness. Even if it had, we should be very wary as we only have 19 studies in this meta-analysis.
+
+```{r}
+metareg_interaction<-rma(yi=TE, 
+              sei=seTE, 
+              data=Data, 
+              method = "REML", 
+              mods = ~ tester * year_cent 
+              )
+metareg_interaction
 ```
 
 ## Acknowledgments and further reading... .
